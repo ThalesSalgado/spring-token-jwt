@@ -1,0 +1,12 @@
+version: '3'
+
+services:
+
+  db:
+    image: postgres:10.3-alpine
+    environment:
+      - POSTGRES_PASSWORD=tokenjwt
+      - POSTGRES_USER=tokenjwt
+      - POSTGRES_DB=tokenjwt
+    ports:
+      - 5432:5432
