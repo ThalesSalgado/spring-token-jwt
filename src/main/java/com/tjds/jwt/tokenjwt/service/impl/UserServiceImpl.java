@@ -44,9 +44,14 @@ public class UserServiceImpl implements UserDetailsService, UserService {
             authorities.add(new SimpleGrantedAuthority("ROLE_DEFAULT"));
         } else {
             user.getRoles().forEach(role -> {
-                //authorities.add(new SimpleGrantedAuthority(role.getName()));
-                authorities.add(new SimpleGrantedAuthority("ROLE_" + role.getName()));
+                role.getPermissions().forEach(permission -> {
+                    authorities.add(new SimpleGrantedAuthority("ROLE_" + permission.getName()));
+                });
             });
+//            user.getRoles().forEach(role -> {
+//                //authorities.add(new SimpleGrantedAuthority(role.getName()));
+//                authorities.add(new SimpleGrantedAuthority("ROLE_" + role.getName()));
+//            });
         }
 
         return authorities;

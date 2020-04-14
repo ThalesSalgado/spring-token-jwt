@@ -1,21 +1,8 @@
-drop table if exists role
-drop table if exists user_app
-drop table if exists user_roles
-drop table if exists permission
-
---create table user_app (id bigint not null auto_increment, age integer, password varchar(255), salary bigint, username varchar(255), primary key (id))
-create table user_app (id bigint not null auto_increment, username varchar(255) unique, application varchar(255), password varchar(255), primary key (id))
-create table role (id bigint not null auto_increment, description varchar(255), name varchar(255), primary key (id))
-create table permission (id bigint not null auto_increment, description varchar(255), name varchar(255), primary key (id))
-
-create table user_roles (user_id bigint not null, role_id bigint not null, primary key (user_id, role_id))
-alter table user_roles add constraint foreign key (role_id) references role (id)
-alter table user_roles add constraint foreign key (user_id) references user_app (id)
-
-create table role_permissions (role_id bigint not null, permission_id bigint not null, primary key (role_id, permission_id))
-alter table role_permissions add constraint foreign key (role_id) references role (id)
-alter table role_permissions add constraint foreign key (permission_id) references permission (id)
-
+select * from user_app;
+select * from role;
+select * from permission;
+select * from user_roles;
+select * from role_permissions;
 
 INSERT INTO user_app (id, username, application, password) VALUES (1, 'user1', 'Delfos', '$2a$10$HTx0Pt6VQERJ/fgxSlNyQO/suHNbAvTupTjOrCBgqnnOjidS6zBDC');
 INSERT INTO user_app (id, username, application, password) VALUES (2, 'user2', 'Delfos', '$2a$10$dTod4LQlkNhJbFzF1dFeX.PflcUB5uMlnqt4E7AwP6GCt1oZJDT8i');
@@ -28,3 +15,19 @@ INSERT INTO role (id, description, name) VALUES (3, 'User role', 'ANALIST');
 INSERT INTO user_roles (user_id, role_id) VALUES (1, 1);
 INSERT INTO user_roles (user_id, role_id) VALUES (2, 2);
 INSERT INTO user_roles (user_id, role_id) VALUES (3, 3);
+
+insert into permission (id, description, name) values (1, '', 'POLICIES_ALL');
+insert into permission (id, description, name) values (2, '', 'POLICIES_READ');
+insert into permission (id, description, name) values (3, '', 'POLICIES_APPROVE');
+insert into permission (id, description, name) values (4, '', 'POLICIES_CREATE');
+insert into permission (id, description, name) values (5, '', 'USERS_ALL');
+insert into permission (id, description, name) values (6, '', 'USERS_READ');
+insert into permission (id, description, name) values (7, '', 'USERS_CREATE');
+insert into permission (id, description, name) values (8, '', 'USERS_EDIT');
+
+insert into role_permissions (role_id, permission_id) values (1, 1);
+insert into role_permissions (role_id, permission_id) values (2, 2);
+insert into role_permissions (role_id, permission_id) values (3, 2);
+insert into role_permissions (role_id, permission_id) values (3, 4);
+insert into role_permissions (role_id, permission_id) values (1, 5);
+insert into role_permissions (role_id, permission_id) values (3, 6);
