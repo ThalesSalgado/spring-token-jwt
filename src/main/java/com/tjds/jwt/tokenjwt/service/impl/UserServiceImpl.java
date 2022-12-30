@@ -43,19 +43,14 @@ public class UserServiceImpl implements UserDetailsService, UserService {
         if (user.getRoles().isEmpty()) {
             authorities.add(new SimpleGrantedAuthority("ROLE_DEFAULT"));
         } else {
-            user.getRoles().forEach(role -> {
-                role.getPermissions().forEach(permission -> {
-                    authorities.add(new SimpleGrantedAuthority("ROLE_" + permission.getName()));
-                });
-            });
-//            user.getRoles().forEach(role -> {
-//                //authorities.add(new SimpleGrantedAuthority(role.getName()));
-//                authorities.add(new SimpleGrantedAuthority("ROLE_" + role.getName()));
-//            });
+            user.getRoles().forEach(role ->
+                    role.getPermissions()
+                            .forEach(permission ->
+                                    authorities.add(new SimpleGrantedAuthority("ROLE_" + permission.getName())))
+            );
         }
 
         return authorities;
-        //return Arrays.asList(new SimpleGrantedAuthority("ROLE_ADMIN"));
     }
 
     public List<User> findAll() {
